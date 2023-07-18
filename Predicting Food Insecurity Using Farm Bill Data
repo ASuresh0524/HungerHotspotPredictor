@@ -1,0 +1,54 @@
+# Import libraries
+import pandas as pd 
+from sklearn.linear_model import LinearRegression
+from sklearn.model_selection import train_test_split
+
+# Load datasets
+farm_bill_data = pd.read_csv('farm_bill_allocations.csv') 
+food_insecurity_data = pd.read_csv('food_insecurity_by_county.csv')
+economic_data = pd.read_csv('county_economic_indicators.csv')
+climate_data = pd.read_csv('climate_indicators_by_county.csv')
+
+# Merge datasets
+data = pd.merge(farm_bill_data, food_insecurity_data, on='County')
+data = pd.merge(data, economic_data, on='County')
+data = pd.merge(data, climate_data, on='County')
+
+# Select features
+features = ['Farm_bill_allocation', 'Median_income', 'Unemployment_rate', 
+            'Drought_severity', 'Crop_yield']
+            
+X = data[features]
+
+# Target variable
+y = data['Food_insecurity_rate']  
+
+# Split data into train and test
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2) 
+
+# Train linear regression model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Evaluate model 
+r_sq = model.score(X_test, y_test)
+print('Coefficient of determination: ', r_sq) 
+
+# Make predictions
+predictions = model.predict(X_test)
+
+# Calculate error  
+from sklearn.metrics import mean_squared_error
+mse = mean_squared_error(y_test, predictions)
+
+# Identify counties with highest error
+errors = y_test - predictions
+high_error_counties = data.loc[errors.abs().sort_values(ascending=False).head(20).index]
+
+print('Counties with highest error in predictions: ')
+print(high_error_counties['County'].values)
+
+# Save model
+import pickle
+with open('food_insecurity_model.pkl', 'wb') as file:
+    pickle.dump(model, file)
