@@ -9,6 +9,7 @@ farm_bill_allocations.csv: Farm Bill spending amounts by county and program
 food_insecurity_by_county.csv: Food insecurity rates by county
 county_economic_indicators.csv: County-level economic data like median income, unemployment rate
 climate_indicators_by_county.csv: County-level climate and crop yield data
+
 Modeling
 The predict_food_insecurity.py script executes the following steps:
 
