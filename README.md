@@ -1,5 +1,5 @@
 # BFW-ML-AI-Projects
-Overview
+Overview: Predictive Modeling 
 This project develops a machine learning model to predict county-level food insecurity rates based on factors like Farm Bill funding allocations, economic indicators, and climate/crop data. The goal is to identify counties most at risk for high food insecurity in order to guide Farm Bill funding and interventions.
 
 Data
@@ -26,8 +26,6 @@ Key metrics are coefficient of determination (R-squared) to evaluate model fit a
 Usage
 To run the model:
 
-Copy code
-
 python predict_food_insecurity.py
 This will output model evaluation results and a list of high priority counties.
 
@@ -40,3 +38,47 @@ Try different ML algorithms like random forests
 Tune model hyperparameters
 Incorporate additional data like demographics
 Develop ensemble methods to combine multiple models
+
+Image Classification for Hunger Analysis
+Overview
+This project trains an image classifier to identify signs of malnutrition from photographs. The goal is to recognize three classes - healthy, malnourished, or starving. This can help aid organizations analyze hunger issues through visual data.
+
+Data
+The model is trained on a dataset of labeled images showing people with varying levels of nutrition. The data is split into training and validation sets.
+
+Image augmentation is used to expand the training data by applying transformations like rotations and flips.
+
+Model Architecture
+The model uses transfer learning with a VGG16 convolutional base pre-trained on ImageNet. The top layers are re-trained to classify hunger levels.
+
+Key techniques:
+
+Frozen convolutional base for transfer learning
+Added dense layers for classification
+Lower learning rate
+Early stopping for regularization
+Training
+The model is trained for 30 epochs with a batch size of 32. Adam optimizer is used with a learning rate of 1e-5.
+
+Training stops early if validation loss does not improve for 3 epochs.
+
+Evaluation
+Accuracy and loss are measured on the validation set. Confusion matrix can show classification errors.
+
+Usage
+To train the model:
+python hunger_classification.py
+This will output accuracy metrics.
+
+To make predictions on new images:
+
+import model
+
+test_img = load_img('test.jpg') 
+prediction = model.predict(test_img)
+Improvement Ideas
+Fine-tune hyperparameters like learning rate
+Use more training data
+Try different CNN architectures
+Address class imbalance
+Ensemble methods
