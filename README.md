@@ -1,5 +1,7 @@
 # BFW-ML-AI-Projects
-Overview: Predictive Modeling 
+Overview: 
+
+Predictive Modeling 
 This project develops a machine learning model to predict county-level food insecurity rates based on factors like Farm Bill funding allocations, economic indicators, and climate/crop data. The goal is to identify counties most at risk for high food insecurity in order to guide Farm Bill funding and interventions.
 
 Data
@@ -19,7 +21,7 @@ Splits data into training and test sets
 Trains a linear regression model
 Evaluates model performance on test data
 Makes predictions and calculates error metrics
-Identifies high error counties to prioritize
+Identifies high-error counties to prioritize
 Saves model to file for operationalization
 Key metrics are coefficient of determination (R-squared) to evaluate model fit and mean squared error to quantify prediction error.
 
@@ -27,7 +29,7 @@ Usage
 To run the model:
 
 python predict_food_insecurity.py
-This will output model evaluation results and a list of high priority counties.
+This will output model evaluation results and a list of high-priority counties.
 
 The trained model object is saved to food_insecurity_model.pkl for making predictions on new data.
 
@@ -40,8 +42,9 @@ Incorporate additional data like demographics
 Develop ensemble methods to combine multiple models
 
 Image Classification for Hunger Analysis
+
 Overview
-This project trains an image classifier to identify signs of malnutrition from photographs. The goal is to recognize three classes - healthy, malnourished, or starving. This can help aid organizations analyze hunger issues through visual data.
+This project trains an image classifier to identify signs of malnutrition from photographs. The goal is to recognize three classes - healthy, malnourished, or starving. This can help aid organizations in analyzing hunger issues through visual data.
 
 Data
 The model is trained on a dataset of labeled images showing people with varying levels of nutrition. The data is split into training and validation sets.
@@ -63,7 +66,7 @@ The model is trained for 30 epochs with a batch size of 32. Adam optimizer is us
 Training stops early if validation loss does not improve for 3 epochs.
 
 Evaluation
-Accuracy and loss are measured on the validation set. Confusion matrix can show classification errors.
+Accuracy and loss are measured on the validation set. A confusion matrix can show classification errors.
 
 Usage
 To train the model:
