@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hunger Hotspot Predictor Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+</head>
+<body class="bg-gray-100">
+    <nav class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto">
+            <h1 class="text-2xl font-bold">Hunger Hotspot Predictor</h1>
+            <p class="text-sm">Powered by Machine Learning</p>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4">
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white p-4 rounded-lg shadow" id="totalCounties">
+                <h3 class="text-gray-500 text-sm">Total Counties</h3>
+                <p class="text-2xl font-bold">Loading...</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow" id="statesCovered">
+                <h3 class="text-gray-500 text-sm">States Covered</h3>
+                <p class="text-2xl font-bold">Loading...</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow" id="avgInsecurity">
+                <h3 class="text-gray-500 text-sm">Avg Food Insecurity</h3>
+                <p class="text-2xl font-bold">Loading...</p>
+            </div>
+            <div class="bg-white p-4 rounded-lg shadow" id="highestRiskState">
+                <h3 class="text-gray-500 text-sm">Highest Risk State</h3>
+                <p class="text-2xl font-bold">Loading...</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- High Risk Counties -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4">High Risk Counties</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full table-auto">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="px-4 py-2">County</th>
+                                <th class="px-4 py-2">State</th>
+                                <th class="px-4 py-2">Risk Level</th>
+                            </tr>
+                        </thead>
+                        <tbody id="highRiskTable">
+                            <tr><td colspan="3" class="text-center py-4">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Funding Impact -->
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-bold mb-4">Funding Impact Analysis</h2>
+                <canvas id="fundingChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch and display county stats
+        fetch('/api/county-stats')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.getElementById('totalCounties').querySelector('p').textContent = data.data.total_counties;
+                    document.getElementById('statesCovered').querySelector('p').textContent = data.data.states_covered;
+                    document.getElementById('avgInsecurity').querySelector('p').textContent = 
+                        data.data.avg_food_insecurity.toFixed(1) + '%';
+                    document.getElementById('highestRiskState').querySelector('p').textContent = data.data.highest_risk_state;
+                }
+            });
+
+        // Fetch and display high risk counties
+        fetch('/api/high-risk-counties')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const tableBody = document.getElementById('highRiskTable');
+                    tableBody.innerHTML = '';
+                    data.data.forEach(county => {
+                        tableBody.innerHTML += `
+                            <tr class="border-b">
+                                <td class="px-4 py-2">${county.county_name}</td>
+                                <td class="px-4 py-2">${county.state}</td>
+                                <td class="px-4 py-2">${county.predicted_food_insecurity_rate.toFixed(1)}%</td>
+                            </tr>
+                        `;
+                    });
+                }
+            });
+
+        // Fetch and display funding impact
+        fetch('/api/funding-impact')
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const ctx = document.getElementById('fundingChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['SNAP', 'WIC', 'Rural Development'],
+                            datasets: [{
+                                label: 'Correlation with Food Insecurity',
+                                data: [
+                                    data.correlations.snap_correlation,
+                                    data.correlations.wic_correlation,
+                                    data.correlations.rural_dev_correlation
+                                ],
+                                backgroundColor: [
+                                    'rgba(54, 162, 235, 0.5)',
+                                    'rgba(255, 99, 132, 0.5)',
+                                    'rgba(75, 192, 192, 0.5)'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+    </script>
+</body>
+</html> 

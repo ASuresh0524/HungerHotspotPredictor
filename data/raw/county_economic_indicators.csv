@@ -1,0 +1,11 @@
+county_fips,county_name,state,median_household_income,unemployment_rate,poverty_rate,cost_of_living_index,year
+06037,Los Angeles,CA,72150,5.8,14.2,146.6,2023
+36061,New York,NY,89620,4.9,12.8,187.2,2023
+17031,Cook,IL,67480,6.2,13.5,123.4,2023
+48201,Harris,TX,62890,5.4,15.8,96.8,2023
+13121,Fulton,GA,64520,5.9,16.2,107.5,2023
+53033,King,WA,98290,3.8,11.5,167.8,2023
+04013,Maricopa,AZ,65870,4.7,14.8,102.3,2023
+12086,Miami-Dade,FL,54320,5.2,15.5,123.1,2023
+26163,Wayne,MI,49840,7.1,17.2,89.4,2023
+42101,Philadelphia,PA,52650,6.8,16.8,101.2,2023 
