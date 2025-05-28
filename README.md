@@ -95,17 +95,15 @@ We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.
 
 ## Research Applications
 This project has been cited in several academic publications and policy papers:
-- Journal of Food Security (2023)
-- Agricultural Economics Quarterly (2023)
+- Sodexo Foundation (2025)
+- Hormel Food Services (2024)
 - USDA Economic Research Service Reports
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
-For questions about the project or collaboration opportunities, please contact:
-- Email: project@hungerhotspot.org
-- Twitter: @HungerHotspot
+For questions about the project or collaboration opportunities, please contact me or Joshua's Heart Foundation 
 
 ## Acknowledgments
 - USDA Food and Nutrition Service
